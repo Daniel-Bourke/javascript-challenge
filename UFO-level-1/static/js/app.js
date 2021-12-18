@@ -1,3 +1,5 @@
+// THIS INCLUDES PART 2
+
 // from data.js
 var tableData = data;
 // console.log(tableData);
@@ -37,7 +39,6 @@ var country_Filter_Input_Element = d3.select("#country");
 var shape_Filter_Input_Element = d3.select("#shape");
 
 
-
 // When the filter_table_button is clicked
 filter_table_button.on("click", (event) => {
 
@@ -54,43 +55,63 @@ filter_table_button.on("click", (event) => {
     var country_Filter_Input_Value = country_Filter_Input_Element.property("value");
     var shape_Filter_Input_Value = shape_Filter_Input_Element.property("value");
 
-
+    // Check the date filter input
+    // if its blank, no filtering to be done
     if (date_Filter_Input_Value == "") {
         var Data_That_Matches_date_Filter = tableData
     }
+    // Data_That_Matches_Filter is data where the datetime column value matches the filter input value
     else {
         Data_That_Matches_date_Filter = tableData.filter(tableData => tableData.datetime === date_Filter_Input_Value);
     };
+
+
+    // Check the city filter input
+    // if its blank, no filtering to be done
     if (city_Filter_Input_Value == "") {
         var Data_That_Matches_city_Filter = Data_That_Matches_date_Filter
     }
+    // Data_That_Matches_Filter is data where the city column value matches the filter input value
     else {
         Data_That_Matches_city_Filter = Data_That_Matches_date_Filter.filter(Data_That_Matches_date_Filter => Data_That_Matches_date_Filter.city === city_Filter_Input_Value);
     };
+
+
+    // Check the state filter input
+    // if its blank, no filtering to be done
     if (state_Filter_Input_Value == "") {
         var Data_That_Matches_state_Filter = Data_That_Matches_city_Filter
     }
+    // Data_That_Matches_Filter is data where the datetime column value matches the filter input value
     else {
         Data_That_Matches_state_Filter = Data_That_Matches_city_Filter.filter(Data_That_Matches_city_Filter => Data_That_Matches_city_Filter.state === state_Filter_Input_Value);
     };
+
+
+    // Check the country filter input
+    // if its blank, no filtering to be done
     if (country_Filter_Input_Value == "") {
         var Data_That_Matches_country_Filter = Data_That_Matches_state_Filter
     }
+    // Data_That_Matches_Filter is data where the country column value matches the filter input value
     else {
         Data_That_Matches_country_Filter = Data_That_Matches_state_Filter.filter(Data_That_Matches_state_Filter => Data_That_Matches_state_Filter.country === country_Filter_Input_Value);
     };
+
+
+    // Check the shape filter input
+    // if its blank, no filtering to be done
     if (shape_Filter_Input_Value == "") {
         var Data_That_Matches_shape_Filter = Data_That_Matches_country_Filter
     }
+    // Data_That_Matches_Filter is data where the shape column value matches the filter input value
     else {
         Data_That_Matches_shape_Filter = Data_That_Matches_country_Filter.filter(Data_That_Matches_country_Filter => Data_That_Matches_country_Filter.shape === shape_Filter_Input_Value);
     };
 
 
-    // Data_That_Matches_Filter is data where the datetime column value matches the filter input value
-    // var Data_That_Matches_Filter = tableData.filter(tableData => tableData.datetime === date_Filter_Input_Value);
 
-    // Account for the case in which no sightings occured on a chosen date
+    // Account for the case in which no sightings occured on a set of filters date
     if (Data_That_Matches_shape_Filter.length == 0) {
         // add a new row, and a cell/td saying there was no sightings
         tbody.append("tr").append("td").text("there were no sightings on this date")
